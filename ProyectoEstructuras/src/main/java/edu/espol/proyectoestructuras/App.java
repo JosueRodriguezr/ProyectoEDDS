@@ -34,6 +34,27 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch();
+        DoublyLinkedCircularList prueba = new DoublyLinkedCircularList<>();
+        
+        prueba.addLast(1);
+        prueba.addLast(2);
+        prueba.addLast(3);
+        prueba.addLast(4);
+        prueba.addLast(5);
+        
+        System.out.println(prueba.isEmpty());
+        
+        for(int i=0; i<prueba.size();i++){
+            System.out.println(prueba.get(i));
+        }
+        System.out.println("Header:"+prueba.get(0));
+        
+        prueba.moverLista("derecha");
+        
+        for(int i=0; i<prueba.size();i++){
+            System.out.println(prueba.get(i));
+        }
+        System.out.println("Header:"+prueba.get(0));
     }
 
 }

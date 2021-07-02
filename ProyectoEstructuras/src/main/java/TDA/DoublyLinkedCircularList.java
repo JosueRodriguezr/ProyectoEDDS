@@ -214,6 +214,49 @@ public class DoublyLinkedCircularList<E> implements List<E> {
         }
         return null;
     }
+    
+    
+    public void moverLista(String orientacion){
+        
+        if("derecha".equals(orientacion)){
+            //Se obtiene el ultimo elemento, se lo guarda y se lo borra
+            E p = this.get(effectiveSize-1);
+            this.removeLast();
+            //Se recorre la lista y se agrega todos menos el ultimo que pasara a ser primero
+            this.addFirst(p);
+            effectiveSize--;
+            
+        }else if("izquierda".equals(orientacion)){
+            //Se obtiene el primer elemento
+            E p = this.get(0);
+            //Se recorre la lista y se agrega todos menos el primer elemento que pasara a ser ultimo
+            
+            this.addLast(p);
+            this.removeFirst();
+            effectiveSize--;
+            
+        }
+        
+    }
+    
+//    public void Operar(String orientacion){
+//        if("derecha".equals(orientacion)){
+//            for(int i=0; i<effectiveSize-1;i++){
+//                int valor= (int) this.get(i);
+//                valor++;
+//                this.set(i,valor);
+//                
+//            }
+//        }else if("izquierda".equals(orientacion)){
+//            for(int i=0; i<effectiveSize-1;i++){
+//                int valor= (int) this.get(i);
+//                valor--;
+//                this.set(i,valor);
+//                
+//            }
+//        }
+//    
+//    }
 
     @Override
     public Iterator<E> iterator() {
