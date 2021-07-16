@@ -11,7 +11,8 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 /**
@@ -19,16 +20,13 @@ import javafx.scene.control.TextField;
  *
  * @author josue
  */
-public class PInicioController implements Initializable {
+public class PLogInController implements Initializable {
 
     @FXML
-    private Button button_scoreboard;
+    private TextField txtUserName;
     @FXML
-    private TextField txt_nombre;
-    @FXML
-    private TextField txtCircles;
-    
-    public static int circulosJugar = 0;
+    private PasswordField txtPassword;
+
     /**
      * Initializes the controller class.
      */
@@ -38,16 +36,21 @@ public class PInicioController implements Initializable {
     }    
     
     @FXML
-    public void scenePlay() throws IOException{
-        if(!txtCircles.getText().equals("")){
-            circulosJugar = Integer.parseInt(txtCircles.getText());
-            App.setRoot("PGame");
+    public void sceneRegistro() throws IOException{
+        App.setRoot("PRegistro");
+    }
+    
+    public void sceneInicio() throws IOException{
+        if(txtUserName.getText().equals("Josue") && txtPassword.getText().equals("123")){
+            App.setRoot("PInicio");
         }else{
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setHeaderText(null);
-            alert.setTitle("Informacion Insuficiente");
-            alert.setContentText("Debe seleccionar escribir el numero de circulos con los que desea inciar");
+            alert.setTitle("Informacion Incorrecta");
+            alert.setContentText("El usuario o la contraseña ingresada no es correcta");
             alert.showAndWait();
-        }        
+        }
     }
+    
+    
 }

@@ -17,11 +17,12 @@ import java.util.Scanner;
 public class App extends Application {
 
     private static Scene scene;
-
+    public static boolean isOpen = true;
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("PInicio"), 1080, 720);
+        scene = new Scene(loadFXML("PLogIn"), 1800, 900);
         stage.setScene(scene);
+        stage.setOnCloseRequest(e -> isOpen=false);
         stage.show();
     }
 
@@ -89,8 +90,7 @@ public class App extends Application {
                 circuloP.remove(eliminar);
                 decre++;
             }
-        }
-        
+        } 
     }
     
     
@@ -107,8 +107,6 @@ public class App extends Application {
                 int valor= (int) lista.get(i);
                 valor--;
                 lista.set(i,valor);
-                
-                
             }
         }
     
@@ -148,7 +146,4 @@ public class App extends Application {
             return total;
         }
     }
-
 }
-    
-

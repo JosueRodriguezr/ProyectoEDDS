@@ -238,7 +238,6 @@ public class DoublyLinkedCircularList<E> implements List<E> {
         }
         
     }
-    
 //    public void Operar(String orientacion){
 //        if("derecha".equals(orientacion)){
 //            for(int i=0; i<effectiveSize-1;i++){
