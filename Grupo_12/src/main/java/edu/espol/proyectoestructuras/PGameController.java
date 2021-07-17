@@ -56,6 +56,8 @@ public class PGameController implements Initializable {
     private int v = 1;
             
     private int apuesta = PInicioController.apuesta;
+    
+    private int nCirculos = PInicioController.cantidadPorCirculo;
     /**
      * Initializes the controller class.
      */
@@ -63,7 +65,7 @@ public class PGameController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         Thread t = new Thread(()-> {
             try {
-                juego(PInicioController.circulosJugar, Listacirculos, apuesta);
+                juego(PInicioController.circulosJugar, Listacirculos, apuesta,nCirculos );
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -71,10 +73,10 @@ public class PGameController implements Initializable {
         t.start();
     }    
     
-    public void juego(int numeroCirculos, DoublyLinkedCircularList<DoublyLinkedCircularList> listas, int Apuesta) throws IOException{
+    public void juego(int numeroCirculos, DoublyLinkedCircularList<DoublyLinkedCircularList> listas, int Apuesta, int tamanioCirculo) throws IOException{
         for(int i=0; i<numeroCirculos;i++){
             DoublyLinkedCircularList<Integer> temp = new DoublyLinkedCircularList<>();
-            for(int n=0; n<5;n++){
+            for(int n=0; n<tamanioCirculo;n++){
                 Random random = new Random();
                 int x= random.nextInt(9);
                 if(!temp.equals(x)){
@@ -83,6 +85,13 @@ public class PGameController implements Initializable {
             }
             listas.addLast(temp);
         }
+        Platform.runLater(()->{
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setHeaderText(null);
+                    alert.setTitle("Bienvenido!");
+                    alert.setContentText("Para iniciar decide con que movimiento deseas iniciar, recuerda que no puedes cambiarlo después");
+                    alert.showAndWait();
+                });
         while(App.isOpen){
             if(rotar == true){
                 Platform.runLater(()->gridPane.getChildren().clear());
@@ -174,7 +183,7 @@ public class PGameController implements Initializable {
         int nLista = 1;
         if(PInicioController.circulosJugar>3 && listas.get(0).size()>=3){
             for(int i = 0; i<listas.size(); i++){
-                int radioNecesario = (radio((listas.get(i).size())-2) * nLista) ;
+                int radioNecesario = (radio((listas.get(i).size())-(1/2)) * nLista) ;
                 crearCirculos(listas.get(i), radioNecesario);
                 nLista+=1;
             }

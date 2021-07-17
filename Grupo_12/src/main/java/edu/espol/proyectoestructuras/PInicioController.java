@@ -11,7 +11,6 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
@@ -32,6 +31,10 @@ public class PInicioController implements Initializable {
     public static int circulosJugar = 0;
     
     public static int apuesta = 0;
+    
+    public static int cantidadPorCirculo = 0;
+    @FXML
+    private TextField txtCantidad;
     /**
      * Initializes the controller class.
      */
@@ -43,9 +46,10 @@ public class PInicioController implements Initializable {
     
     @FXML
     public void scenePlay() throws IOException{
-        if(!txtCircles.getText().equals("") && !txtApuesta.getText().equals("")){
+        if(!txtCircles.getText().equals("") && !txtApuesta.getText().equals("") && !txtCantidad.getText().equals("")){
             circulosJugar = Integer.parseInt(txtCircles.getText());
             apuesta = Integer.parseInt(txtApuesta.getText());
+            cantidadPorCirculo = Integer.parseInt(txtCantidad.getText());
             App.setRoot("PGame");
         }else{
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -56,6 +60,7 @@ public class PInicioController implements Initializable {
         }        
     }
     
+    @FXML
     public void sceneBack() throws IOException{
         App.setRoot("PLogIn");
     }

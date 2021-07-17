@@ -22,9 +22,10 @@
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="116.0" minHeight="0.0" prefHeight="41.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="242.0" minHeight="1.0" prefHeight="34.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="242.0" minHeight="10.0" prefHeight="36.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="311.0" minHeight="10.0" prefHeight="214.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="242.0" minHeight="1.0" prefHeight="37.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="242.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="242.0" minHeight="4.0" prefHeight="29.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="311.0" minHeight="10.0" prefHeight="182.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Label text="Numero de circulos:" GridPane.rowIndex="1">
@@ -32,12 +33,18 @@
                   <Font name="Times New Roman Bold" size="20.0" />
                </font></Label>
             <TextField fx:id="txtCircles" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label text="Apuesta:" GridPane.rowIndex="2">
+            <Label text="Apuesta:" textFill="WHITE" GridPane.rowIndex="2">
                <font>
                   <Font name="Times New Roman Bold" size="20.0" />
                </font>
             </Label>
             <TextField fx:id="txtApuesta" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label text="Tamaño por circulo:" textFill="WHITE" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Times New Roman Bold" size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtCantidad" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
       </GridPane>
    </center>
@@ -51,7 +58,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="button_scoreboard" mnemonicParsing="false" onAction="#sceneBack" text="Cerrar sesión" />
+            <Button mnemonicParsing="false" onAction="#sceneBack" text="Cerrar sesión" />
             <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#scenePlay" text="PLAY!" GridPane.columnIndex="1" />
          </children>
       </GridPane>
