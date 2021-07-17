@@ -181,21 +181,32 @@ public class PGameController implements Initializable {
     public void mostrarLista(DoublyLinkedCircularList<DoublyLinkedCircularList> listas ){
         panelCentral.getChildren().clear();
         int nLista = 1;
-        if(PInicioController.circulosJugar>3 && listas.get(0).size()>=3){
+        if(PInicioController.circulosJugar>=5&& listas.get(0).size()>=5){
             for(int i = 0; i<listas.size(); i++){
-                int radioNecesario = (radio((listas.get(i).size())-(1/2)) * nLista) ;
+                int radioNecesario = (radio((listas.get(i).size())-3) * nLista) ;
                 crearCirculos(listas.get(i), radioNecesario);
                 nLista+=1;
             }
-        }else{
+        }else if(PInicioController.circulosJugar>3 && listas.get(0).size()>3){
             for(int i = 0; i<listas.size(); i++){
-                int radioNecesario = (radio(listas.get(i).size()*2) * nLista) ;
+                int radioNecesario = (radio((listas.get(i).size())-2) * nLista) ;
                 crearCirculos(listas.get(i), radioNecesario);
                 nLista+=1;
             }
-        }      
+        }else if(PInicioController.circulosJugar>3 && listas.get(0).size() == 1){
+            for(int i = 0; i<listas.size(); i++){
+                int radioNecesario = (radio((listas.get(i).size())*2) * nLista) ;
+                crearCirculos(listas.get(i), radioNecesario);
+                nLista+=1;
+            }
+        } else{
+            for(int i = 0; i<listas.size(); i++){
+                int radioNecesario = (radio(listas.get(i).size()) * nLista) ;
+                crearCirculos(listas.get(i), radioNecesario);
+                nLista+=1;
+            }     
     }
-    
+    }
     public void crearCirculos (DoublyLinkedCircularList<Integer> circulo, int radioNecesario){
         double anguloNecesario = angulo (circulo.size());
         double cont = 0;
