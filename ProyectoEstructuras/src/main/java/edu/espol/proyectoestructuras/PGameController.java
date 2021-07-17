@@ -6,6 +6,7 @@
 package edu.espol.proyectoestructuras;
 
 import TDA.DoublyLinkedCircularList;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.Random;
@@ -41,25 +42,36 @@ public class PGameController implements Initializable {
     private RadioButton optionEliminar;
     @FXML
     private RadioButton optionRotar;
-    
-    private boolean rotar = false;
-    private boolean eliminar = false;
     @FXML
     private GridPane gridPane;
+    @FXML
+    private Label infoPartida;
+    
+    private boolean rotar = false;
+    
+    private boolean eliminar = false;
     
     private DoublyLinkedCircularList<DoublyLinkedCircularList> Listacirculos = new DoublyLinkedCircularList<>();
     
     private int v = 1;
+            
+    private int apuesta = PInicioController.apuesta;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Thread t = new Thread(()-> juego(PInicioController.circulosJugar, Listacirculos));
+        Thread t = new Thread(()-> {
+            try {
+                juego(PInicioController.circulosJugar, Listacirculos, apuesta);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
         t.start();
     }    
     
-    public void juego(int numeroCirculos, DoublyLinkedCircularList<DoublyLinkedCircularList> listas){
+    public void juego(int numeroCirculos, DoublyLinkedCircularList<DoublyLinkedCircularList> listas, int Apuesta) throws IOException{
         for(int i=0; i<numeroCirculos;i++){
             DoublyLinkedCircularList<Integer> temp = new DoublyLinkedCircularList<>();
             for(int n=0; n<5;n++){
@@ -69,7 +81,7 @@ public class PGameController implements Initializable {
                     temp.addLast(x); 
                     }
             }
-            Listacirculos.addLast(temp);
+            listas.addLast(temp);
         }
         while(App.isOpen){
             if(rotar == true){
@@ -94,40 +106,73 @@ public class PGameController implements Initializable {
                 });
             }
             if(eliminar == true){
-                TextField indiceEliminar = new TextField();
-                Button bAceptar = new Button("Eliminar");
                 if(v==1){
                     v=0;
-                    Platform.runLater(()-> {
-                    gridPane.getChildren().clear();
-                    gridPane.add(indiceEliminar, 0, 0);
-                    gridPane.add(bAceptar, 1, 0);
-                    });
-                }
-                bAceptar.setOnAction(e -> {
-                    int indice = Integer.parseInt(indiceEliminar.getText());
-                    for (int a = 0; a<listas.size();a++){
-                        listas.get(a).remove(indice);
-                    }
-                    eliminar = false;
-                    rotar = true;
-                });
-                
+                    eliminar(listas);
+                   
+                }   
             }
-            Platform.runLater(()-> mostrarLista(Listacirculos));
+            
+            Platform.runLater(()-> mostrarLista(listas));
+            int valor = endMatch(listas, Apuesta);
+            Platform.runLater(()->{
+                    infoPartida.setText("Usuario: "+App.jugadorAc.getUsuario()+"\n"+"Apuesta inicial: "+String.valueOf(Apuesta)+"\n"+"Valor circulos : "+ String.valueOf(valor));
+                });
+            if(valor==1){
+                Platform.runLater(()->{
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setHeaderText(null);
+                    alert.setTitle("Juego Terminado!");
+                    alert.setContentText("Usted ha ganado el juego");
+                    alert.showAndWait();
+                    
+                });
+                App.setRoot("PInicio");
+                return;
+            }else if(valor==0 || listas.size()<=0){
+                Platform.runLater(()->{
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setHeaderText(null);
+                    alert.setTitle("Game Over");
+                    alert.setContentText("Suerte para la próxima :)");
+                    alert.showAndWait();
+                });
+                App.setRoot("PInicio");
+                return;
+            }
+            
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException ex) {
                 Thread.currentThread().interrupt();
-            }    
-            
+            }     
         }
-        
     }
+    
+    public void eliminar(DoublyLinkedCircularList<DoublyLinkedCircularList> listas){
+        TextField indiceEliminar = new TextField();
+        Button bAceptar = new Button("Eliminar");
+        Platform.runLater(()-> {
+            gridPane.getChildren().clear();
+            gridPane.add(indiceEliminar, 0, 0);
+            gridPane.add(bAceptar, 1, 0);
+        }); 
+        bAceptar.setOnAction(e -> {
+            int indice = Integer.parseInt(indiceEliminar.getText());
+            if(indice<listas.get(0).size()){
+                for (int a = 0; a<listas.size();a++){
+                        listas.get(a).remove(indice);
+                    }                
+                eliminar = false;
+                rotar = true;
+            }
+        });
+    }
+    
     public void mostrarLista(DoublyLinkedCircularList<DoublyLinkedCircularList> listas ){
         panelCentral.getChildren().clear();
         int nLista = 1;
-        if(PInicioController.circulosJugar>3){
+        if(PInicioController.circulosJugar>3 && listas.get(0).size()>=3){
             for(int i = 0; i<listas.size(); i++){
                 int radioNecesario = (radio((listas.get(i).size())-2) * nLista) ;
                 crearCirculos(listas.get(i), radioNecesario);
@@ -135,12 +180,11 @@ public class PGameController implements Initializable {
             }
         }else{
             for(int i = 0; i<listas.size(); i++){
-                int radioNecesario = (radio(listas.get(i).size()) * nLista) ;
+                int radioNecesario = (radio(listas.get(i).size()*2) * nLista) ;
                 crearCirculos(listas.get(i), radioNecesario);
                 nLista+=1;
             }
-        }
-               
+        }      
     }
     
     public void crearCirculos (DoublyLinkedCircularList<Integer> circulo, int radioNecesario){
@@ -213,7 +257,8 @@ public class PGameController implements Initializable {
             if("derecha".equals(orientacion)){
                 listas.get(i).moverLista(orientacion);
                 for(int n=0; n<listas.get(i).size();n++){
-                    int valor= (int) listas.get(i).get(n);
+                    String temp = String.valueOf(listas.get(i).get(n));
+                    int valor = Integer.parseInt(temp);
                     valor++;
                     listas.get(i).set(n,valor);
 
@@ -221,7 +266,8 @@ public class PGameController implements Initializable {
             }else if("izquierda".equals(orientacion)){
                 listas.get(i).moverLista(orientacion);
                 for(int n=0; n<listas.get(i).size();n++){
-                    int valor= (int) listas.get(i).get(n);
+                    String temp = String.valueOf(listas.get(i).get(n));
+                    int valor = Integer.parseInt(temp);
                     valor--;
                     listas.get(i).set(n,valor);
                 }
@@ -229,5 +275,26 @@ public class PGameController implements Initializable {
         }
         
     
+    }
+    
+    public static int endMatch(DoublyLinkedCircularList<DoublyLinkedCircularList> listas ,Integer apuesta){
+        int total=0;
+        for(int i = 0; i<listas.size(); i++){
+            for(int n=0; n<listas.get(i).size();n++){
+                String temp = String.valueOf(listas.get(i).get(n));
+                int valor = Integer.parseInt(temp);
+                total+=valor;
+            }
+        }
+        if(total==apuesta){
+            //Gano el juego
+            return 1;
+        }else if(total<=0){
+            // Perdio el juego
+            return 0;
+        }else{
+            // Sigue jugando
+            return total;
+        }
     }
 }

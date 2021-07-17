@@ -5,19 +5,28 @@
  */
 package Personaje;
 
+import TDA.DoublyLinkedCircularList;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
 /**
  *
  * @author Joao
  */
-public class Jugador {
+public class Jugador implements Serializable{
     private String nombre;
     private String usuario;
-    private int password;
+    private String password;
     private String email;
     private int partidasG;
     private int partidasT;
+    public static DoublyLinkedCircularList<Jugador> jugadoresRegistrados=new DoublyLinkedCircularList<>();
 
-    public Jugador(String nombre, String usuario, int password, String email) {
+    public Jugador(String nombre, String usuario, String password, String email) {
         this.nombre = nombre;
         this.usuario = usuario;
         this.password = password;
@@ -40,11 +49,11 @@ public class Jugador {
         this.usuario = usuario;
     }
 
-    public int getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(int password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
@@ -75,6 +84,25 @@ public class Jugador {
     public float estadistica(int totales, int ganadas){
         return totales/ganadas;
     
+    }
+    
+    public static void serializar(){
+        try(ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream("jugadores"))){
+            o.writeObject(jugadoresRegistrados);
+        }catch(IOException e){
+            System.out.println("Error al serealizar: "+e);
+        }
+        
+    }
+    
+    public static void deserializar(){
+        try(ObjectInputStream i = new ObjectInputStream(new FileInputStream("jugadores"))){
+            jugadoresRegistrados =  (DoublyLinkedCircularList<Jugador>)i.readObject();  // Casteo porque es la unica forma accesible para serealizar.
+        }catch(IOException e){
+            System.out.println("Error al desserealizar: "+e);
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
     }
     
 }

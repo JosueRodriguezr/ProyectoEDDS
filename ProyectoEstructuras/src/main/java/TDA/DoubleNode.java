@@ -5,15 +5,17 @@
  */
 package TDA;
 
+import java.io.Serializable;
+
 /**
  *
  * @author josue
  */
-public class DoubleNode<E> {
+public class DoubleNode<E> implements Serializable{
 
-    private E content;
-    private DoubleNode<E> next;
-    private DoubleNode<E> previous;
+    public E content;
+    public DoubleNode<E> next;
+    public DoubleNode<E> previous;
 
     public DoubleNode(E element) {
         this.content = element;

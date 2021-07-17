@@ -12,7 +12,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Font;
 
 /**
  * FXML Controller class
@@ -20,27 +22,30 @@ import javafx.scene.control.TextField;
  * @author josue
  */
 public class PInicioController implements Initializable {
-
-    @FXML
-    private Button button_scoreboard;
-    @FXML
-    private TextField txt_nombre;
     @FXML
     private TextField txtCircles;
+    @FXML
+    private Label labelInformacion;
+    @FXML
+    private TextField txtApuesta;
     
     public static int circulosJugar = 0;
+    
+    public static int apuesta = 0;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        labelInformacion.setText("Bienvenido "+App.jugadorAc.getUsuario());
+        labelInformacion.setFont(new Font("Times New Roman Bold", 40));
     }    
     
     @FXML
     public void scenePlay() throws IOException{
-        if(!txtCircles.getText().equals("")){
+        if(!txtCircles.getText().equals("") && !txtApuesta.getText().equals("")){
             circulosJugar = Integer.parseInt(txtCircles.getText());
+            apuesta = Integer.parseInt(txtApuesta.getText());
             App.setRoot("PGame");
         }else{
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -49,5 +54,9 @@ public class PInicioController implements Initializable {
             alert.setContentText("Debe seleccionar escribir el numero de circulos con los que desea inciar");
             alert.showAndWait();
         }        
+    }
+    
+    public void sceneBack() throws IOException{
+        App.setRoot("PLogIn");
     }
 }

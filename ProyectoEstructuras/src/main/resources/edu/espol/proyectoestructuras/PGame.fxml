@@ -37,10 +37,10 @@
       </GridPane>
    </bottom>
    <center>
-      <Pane fx:id="panelCentral" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: WHITE;" BorderPane.alignment="CENTER" />
+      <Pane fx:id="panelCentral" prefHeight="370.0" prefWidth="393.0" style="-fx-background-color: WHITE;" BorderPane.alignment="CENTER" />
    </center>
    <right>
-      <GridPane BorderPane.alignment="CENTER">
+      <GridPane prefHeight="370.0" prefWidth="246.0" BorderPane.alignment="CENTER">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
@@ -51,7 +51,7 @@
          <children>
             <ScrollPane prefHeight="200.0" prefWidth="200.0">
                <content>
-                  <Label fx:id="infoPartida" prefHeight="182.0" prefWidth="94.0" />
+                  <Label fx:id="infoPartida" prefHeight="182.0" prefWidth="238.0" />
                </content>
             </ScrollPane>
          </children>
