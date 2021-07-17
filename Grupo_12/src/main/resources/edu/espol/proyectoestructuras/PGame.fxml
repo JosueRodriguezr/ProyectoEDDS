@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.espol.proyectoestructuras.PGameController">
+   <bottom>
+      <GridPane fx:id="gridPane" depthTest="ENABLE" gridLinesVisible="true" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <RadioButton fx:id="optionEliminar" mnemonicParsing="false" selected="true" text="Eliminar">
+               <toggleGroup>
+                  <ToggleGroup fx:id="selection" />
+               </toggleGroup></RadioButton>
+            <RadioButton fx:id="optionRotar" accessibleText="rotar" mnemonicParsing="false" text="Rotar" toggleGroup="$selection" GridPane.columnIndex="1" />
+            <Button fx:id="bttonConfirmar" mnemonicParsing="false" onAction="#accion" text="Confirmar" GridPane.columnIndex="2" />
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </GridPane>
+   </bottom>
+   <center>
+      <Pane fx:id="panelCentral" prefHeight="370.0" prefWidth="393.0" style="-fx-background-color: WHITE;" BorderPane.alignment="CENTER" />
+   </center>
+   <right>
+      <GridPane prefHeight="370.0" prefWidth="246.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <ScrollPane prefHeight="200.0" prefWidth="200.0">
+               <content>
+                  <Label fx:id="infoPartida" prefHeight="182.0" prefWidth="238.0" />
+               </content>
+            </ScrollPane>
+         </children>
+      </GridPane>
+   </right>
+</BorderPane>
